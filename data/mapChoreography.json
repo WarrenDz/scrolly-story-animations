@@ -1,0 +1,117 @@
+[
+  {
+    "viewpoint": {
+      "rotation": 0,
+      "scale": 1155581.108577,
+      "targetGeometry": {
+        "spatialReference": {
+          "latestWkid": 3857,
+          "wkid": 102100
+        },
+        "xmin": -9480987.971538901,
+        "ymin": 4993703.648371119,
+        "xmax": -9043156.673521623,
+        "ymax": 5272545.927555308
+      }
+    },
+    "layerVisibility": {
+      "layersOn": ["Osprey Points Feature"],
+      "layersOff": []
+    },
+    "trackRenderer": {
+      "trackLayerName": "Osprey Points Feature",
+      "trackFieldName": "tag_local_identifier",
+      "trackInfo": {
+            "enabled": true,
+            "timeField": "startTimeField",
+            "latestObservations": {
+              "visible": true,
+              "renderer": {
+                "type": "simple",
+                "symbol": {
+                  "type": "simple-marker",
+                  "style": "circle",
+                  "color": "Yellow",
+                  "size": 15,
+                  "outline": {
+                    "color": "black",
+                    "width": 2
+                  }
+                }
+              }
+            },
+            "previousObservations": {
+              "enabled": true,
+              "visible": true,
+              "renderer": {
+                "type": "simple",
+                "symbol": {
+                  "type": "simple-marker",
+                  "style": "circle",
+                  "color": "white",
+                  "size": 2.5
+                }
+              }
+            },
+            "trackLines": {
+              "visible": true,
+              "enabled": true,
+              "renderer": {
+                "type": "simple",
+                "symbol": {
+                  "type": "simple-line",
+                  "color": "Orange",
+                  "width": 4
+                }
+              }
+            }
+          }
+        },
+    "timeSlider": {
+      "timeSliderStart": "2016-08-15T00:00:00Z",
+      "timeSliderEnd": "2016-11-21T00:00:00Z",
+      "timeSliderUnit": "days",
+      "timeSliderStep": 3
+    }
+  },
+  {
+    "viewpoint": {
+      "rotation": 0,
+      "scale": 18489297.737236,
+      "targetGeometry": {
+        "spatialReference": {
+          "latestWkid": 3857,
+          "wkid": 102100
+        },
+        "xmin": -12315034.114639107,
+        "ymin": 940916.8624067632,
+        "xmax": -5309733.346361135,
+        "ymax": 5402393.329354744
+      }
+    },
+    "layerVisibility": {
+      "layersOn": ["Osprey Points Feature"],
+      "layersOff": []
+    }
+  },
+  {
+    "viewpoint": {
+      "rotation": 0,
+      "scale": 1155581.108577,
+      "targetGeometry": {
+        "spatialReference": {
+          "latestWkid": 3857,
+          "wkid": 102100
+        },
+        "xmin": -8195493.916410449,
+        "ymin": 1037891.5647293258,
+        "xmax": -7757662.618393171,
+        "ymax": 1316733.8439135144
+      }
+    },
+    "layerVisibility": {
+      "layersOn": [],
+      "layersOff": ["Osprey Points Feature"]
+    }    
+  }
+]
