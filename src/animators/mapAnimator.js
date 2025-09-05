@@ -53,7 +53,6 @@ function setupMessageListener() {
     } else {
       // log("Map is not embedded — enabling hash-based navigation.");
       isEmbedded = false;
-      setupHashListener();
     }
 
     const currentSlide = choreographyData[payload.slide];
@@ -85,7 +84,6 @@ function setupHashListener() {
     }
 
     const currentSlide = choreographyData[hashIndex];
-
     slideAnimation(currentSlide, mapView, timeSlider, isEmbedded);
   });
 }
@@ -136,6 +134,7 @@ function configureTimeSlider() {
 async function initMapAnimator(choreographyPath) {
   await loadChoreography(choreographyPath);
   setupMessageListener();
+  setupHashListener()
   configureTimeSlider();
 }
 
