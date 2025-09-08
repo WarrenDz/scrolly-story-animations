@@ -1,5 +1,5 @@
 import { animationConfig } from '../config/animationConfig.js';
-// This file contains shared state variables used across the scroll-driven story map
+// This sets shared state variables used across the scroll-driven story map
 let isDocked = false;
 let dockStartScroll = null;
 
@@ -20,7 +20,8 @@ function log(...args) {
 // --- Utility Functions ---
 // DOM readiness, panel height, scroll bounds...
 
-// Waits for a specific DOM element to be available before executing a callback function.
+// Polls the DOM every 100ms until an element matching the selector is found,
+// then clears the interval and executes the callback with the found element.
 function waitForElement(selector, callback) {
   const interval = setInterval(() => {
     const element = document.querySelector(selector);
@@ -31,7 +32,10 @@ function waitForElement(selector, callback) {
   }, 100);
 }
 
-// Calculates the height of a narrative panel, adjusting for margins and padding based on its position (first, last, or middle).
+// Calculates the effective height of a narrative panel element,
+// adjusting for top margin if it's the first panel,
+// bottom padding if it's the last panel,
+// or both top and bottom margins for other panels.
 function getPanelHeight(panel) {
   return panel.classList.contains("first")
     ? panel.offsetHeight - parseFloat(getComputedStyle(panel).marginTop)
@@ -42,8 +46,9 @@ function getPanelHeight(panel) {
       parseFloat(getComputedStyle(panel).marginTop);
 }
 
-// Calculates the start and end scroll positions for the panel corresponding to currentSlide.
-// Used to track scroll progress and triggering animations as the user scrolls
+// Computes the scroll boundaries for the current slide panel.
+// Accumulates the height of all previous panels to determine the start scroll position,
+// then adds the current panel's height to get the end scroll position.
 function getPanelScrollBounds(panels, currentSlide) {
   let panelStartScroll = dockStartScroll;
 
@@ -57,7 +62,8 @@ function getPanelScrollBounds(panels, currentSlide) {
   return { panelStartScroll, panelEndScroll };
 }
 
-// Calculates the progress of the current panel based on the scroll position and the panel's scroll bounds.
+// Calculates the scroll progress of the current panel as a normalized value between 0 and 1.
+// Uses the panel's scroll bounds to determine how far the user has scrolled within it.
 function getPanelProgress(panels, currentSlide, scrollY) {
   const { panelStartScroll, panelEndScroll } = getPanelScrollBounds(
     panels,
@@ -70,8 +76,9 @@ function getPanelProgress(panels, currentSlide, scrollY) {
 
 // --- Observers ---
 
-// Creates a MutationObserver to monitor changes to the 'src' attribute of an iframe
-// When the src changes it extracts a slide number from the URL fragment (after the #) and names it current slide.
+// Sets up a MutationObserver to track changes to the iframe's 'src' attribute.
+// When the 'src' updates, it parses the URL fragment (after '#') to extract the slide number,
+// and updates the global `currentSlide` accordingly.
 const createIframeSrcObserver = (iframe) => {
   return new MutationObserver(() => {
     const newSrc = iframe.getAttribute("src") || "";
@@ -82,8 +89,9 @@ const createIframeSrcObserver = (iframe) => {
   });
 };
 
-// Sets up a scroll listener to track the scroll direction and current scroll position.
-// This is used to determine when the user scrolls down or up, which can affect the docking state.
+// Initializes a MutationObserver to monitor docking state changes on a target element.
+// When the element becomes docked (via 'docked' class), it records the scroll position
+// to begin tracking scroll progress. Undocks reset the tracking state.
 function setupDockingObserver(nodeSelector) {
   const targetSelectorDocked = `${nodeSelector} > div > div[class*='jsx-'][class*='container'][class*='main']`;
 
@@ -113,6 +121,9 @@ function setupDockingObserver(nodeSelector) {
   });
 }
 
+// Continuously monitors a DOM node for the (re)insertion of an iframe.
+// Once detected, it initializes the iframe by sending a postMessage,
+// resets the current slide to 0, and attaches a MutationObserver to track 'src' changes.
 function watchForIframeForever(nodeSelector) {
   const iframeSelector = `${nodeSelector} iframe`;
   waitForElement(nodeSelector, (root) => {
@@ -146,7 +157,9 @@ function watchForIframeForever(nodeSelector) {
 
 // --- Scroll tracking ---
 
-// Sets up a scroll listener that tracks the user's scroll position and updates the current slide's progress.
+// Attaches a scroll listener to track the user's scroll position and direction.
+// When the target element is docked, it calculates the scroll progress of the current slide panel,
+// logs the progress, and sends it to the embedded iframe via postMessage for synchronization.
 function setupScrollListener(nodeSelector) {
   const iframeSelector = `${nodeSelector} iframe`;
 
@@ -187,7 +200,9 @@ function setupScrollListener(nodeSelector) {
 
 // --- Initialization ---
 
-// Set up observers and listeners for docking, iframe changes, and scroll events.
+// Initializes the full scroll tracking system for a story map.
+// Sets up observers for docking state, iframe (re)insertion and src changes,
+// and attaches a scroll listener to track slide progress and sync it with the embedded iframe.
 async function createStoryScrollListener(nodeSelector) {
   setupDockingObserver(nodeSelector);
   watchForIframeForever(nodeSelector);
