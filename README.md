@@ -60,10 +60,10 @@ To build your own scrolly-driven StoryMap animation using this toolkit, follow t
 ## 4. Define your Choreography
 - Create or modify the `mapChoreography.json` file containing a list of slide objects.
 - Each slide should define some combination of:
-  - `viewpoint` - 
-  - `timeSlider` -
-  - `layerVisibility` - 
-  - `trackRenderer` - 
+  - `viewpoint` - camera position, scale, rotation
+  - `timeSlider` - time extent, step size, unit
+  - `layerVisibility` - layer names to show/hide
+  - `trackRenderer` - renderer settings for animated tracks
 
 ## 5. Configure `map/index.html`
 - In the `<arcgis-map> tag, set the `itemId` to reference your published Web Map.
