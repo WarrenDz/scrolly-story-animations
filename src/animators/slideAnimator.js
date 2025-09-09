@@ -80,14 +80,13 @@ function toggleTimeSlider({ slideData, mapView, timeSlider, embedded }) {
     // Start the time slider if not already playing and if outside script embed story
     if (timeSlider.state === "ready" && !embedded) {
       timeSlider.play();
-    }
-    else if (timeSlider.state === "ready" && embedded) {
+    } else if (timeSlider.state === "ready" && embedded) {
       timeSlider.stop()
-  } else if (!timeSlider) {
-    log("No timeSlider component found.");
-  } else {
-    log("No timeSlider configuration found in choreography.");
-  }
+    } else if (!timeSlider) {
+      log("No timeSlider component found.");
+    } else {
+      log("No timeSlider configuration found in choreography.");
+    }
   }
 }
 
