@@ -51,8 +51,44 @@ function toggleViewpoint({ slideData, mapView, timeSlider, embedded }) {
     });
 }
 
+/**
+ * Update the timeSlider using configuration from choreographyData.
+ * Sets the full time extent, interval stops, and starting frame.
+ * Automatically starts playback if the slider is ready and not in embedded mode.
+ */
 function toggleTimeSlider({ slideData, mapView, timeSlider, embedded }) {
-  // logic here to set teh time slider and autoplay
+  if ( timeSlider && slideData.timeSlider && slideData.timeSlider.timeSliderStart && slideData.timeSlider.timeSliderEnd ) {
+    const timeStart = slideData.timeSlider.timeSliderStart;
+    const timeEnd = slideData.timeSlider.timeSliderEnd;
+    const timeUnit = slideData.timeSlider.timeSliderUnit;
+    const timeStep = slideData.timeSlider.timeSliderStep;
+    const startFrame = new Date(timeStart);
+    const endFrame = new Date(timeEnd);
+
+    // Configure time extent
+    timeSlider.fullTimeExtent = { start: startFrame, end: endFrame };
+    timeSlider.timeExtent = { start: null, end: startFrame };
+
+    // Set the time slider interval based on choreography
+    timeSlider.stops = {
+      interval: {
+        value: timeStep,
+        unit: timeUnit,
+      },
+    };
+
+    // Start the time slider if not already playing and if outside script embed story
+    if (timeSlider.state === "ready" && !embedded) {
+      timeSlider.play();
+    }
+    else if (timeSlider.state === "ready" && embedded) {
+      timeSlider.stop()
+  } else if (!timeSlider) {
+    log("No timeSlider component found.");
+  } else {
+    log("No timeSlider configuration found in choreography.");
+  }
+  }
 }
 
 
