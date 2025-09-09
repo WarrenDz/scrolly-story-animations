@@ -16,7 +16,7 @@ const choreographyHandlers = {
  * Skips keys listed in NON_EMBED_EXCLUDE_KEYS when in embedded mode.
  * Logs each triggered animation and catches any handler errors.
  */
-const NON_EMBED_EXCLUDE_KEYS = new Set(["viewpoint", "timeSlider"]);
+const NON_EMBED_EXCLUDE_KEYS = new Set(["viewpoint"]);
 
 export function slideAnimation(slideData, mapView, timeSlider, embedded) {
   const context = { slideData, mapView, timeSlider, embedded };
