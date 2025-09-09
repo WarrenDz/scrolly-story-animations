@@ -3,7 +3,7 @@
 
 # Getting Started
 1. Clone the repository
-1. Open the demo
+1. Open the demo (see 'Deployments')
 1. Explore the scripts
 
 # How it Works
@@ -37,7 +37,7 @@ The system is composed of modular scripts that work together to track scroll pro
 - Skips certain transitions when embedded to avoid redundant updates.
 
 > [!NOTE]
-> Slide-based animation also serves as a fallback in the event the map is viewed outside the script-embedded story..
+> Slide-based animation also serves as a fallback in the event the map is viewed outside the script-embedded story.
 
 # Usage
 To build your own scrolly-driven StoryMap animation using this toolkit, follow these key steps:
