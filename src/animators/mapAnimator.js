@@ -9,6 +9,8 @@ let isEmbedded = false; // Flag to indicate if the map is viewed in an embedded 
 // Define the map components
 const mapElement = document.querySelector("arcgis-map");
 mapElement.setAttribute("item-id", animationConfig.mapId);
+mapElement.setAttribute("zoom", animationConfig.mapZoom);
+mapElement.setAttribute("center", animationConfig.mapCenter);
 const timeSlider = document.querySelector("arcgis-time-slider");
 
 // Set DEBUG to true to enable debug logging
