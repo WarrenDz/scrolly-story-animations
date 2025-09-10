@@ -133,6 +133,7 @@ function toggleTrackRenderer({ slideData, mapView, timeSlider, embedded }) {
       );
       if (trackLayer) {
         // these are an attempt to do a hard reset on the renderer when we switch hashes
+        const layerIndex = mapView.map.layers.indexOf(trackLayer);
         try {
           mapView.map.remove(trackLayer);
         } catch (error) {
@@ -140,7 +141,7 @@ function toggleTrackRenderer({ slideData, mapView, timeSlider, embedded }) {
         }
         trackLayer = trackLayer.clone();
         try {
-          mapView.map.add(trackLayer);
+          mapView.map.add(trackLayer, layerIndex);
         } catch (error) {
           console.error("Failed to add track layer:", error);
         }
